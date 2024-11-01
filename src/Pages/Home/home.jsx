@@ -6,7 +6,8 @@ import icon from '../../assets/lapis.png';
 
 function ListaSolicitacao() {
 
-
+   solicitacao = []
+   
     return (
         <div className='container'>
             <div className='Cabecalho'>
@@ -14,19 +15,28 @@ function ListaSolicitacao() {
             </div>
             <div className="containerCards">
                 <div className="cards">
-                    <div className='CardHeader'>
-                        <h2 className='CardTitle'>Equipamento</h2>
-                        <button className='Edit'><img src={icon} alt="edit" className='Logo' /></button>
-                    </div>
-                    <div className='bodyCard'>
-                        <label>Solicitante: </label>
-                        <label>Filial: </label>
-                        <label>Data Solicitação: </label>
-                        <label>Tipo de Serviço: </label>
-                        <label>Serviço/Tipo</label>
-                        <label>Urgencia: </label>
-                        <label>Descrição:</label>
-                    </div>
+
+                    {solicitacao.map(dados => (
+                        <div key={dados.id}>
+                            <div className='CardHeader'>
+                                <h2 className='CardTitle'>{dados.Equipamento}</h2>
+                                <button className='Edit'><img src={icon} alt="edit" className='Logo' /></button>
+                            </div>
+
+                            <div className='bodyCard'>
+                                <label>Solicitante: <span> {dados.Solicitante} </span> </label>
+                                <label>Filial: <span> {dados.Filial} </span> </label>
+                                <label>Data Solicitação: <span>{dados.DataSolicitacao} </span> </label>
+                                <label>Tipo de Serviço: <span> {dados.TipoServ} </span> </label>
+                                <label>Serviço/Item: <span>{dados.Servico} </span> </label>
+                                <label>Urgencia: <span>{dados.Urgencia} </span> </label>
+                                <label>Descrição: <span>{dados.Descricao} </span> </label>
+                                <label>Status: <span>{dados.Estado} </span> </label>
+                                <label>Data Encerrado: <span>{dados.DataEncerrado}</span> </label>
+                            </div>
+                        </div>
+                    ))}
+
                 </div>
             </div>
         </div>
