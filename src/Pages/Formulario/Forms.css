@@ -1,0 +1,165 @@
+* {
+    color: #fff;
+}
+
+body {
+    position: relative;
+    background-image: url('../../assets/wallpaper.jpg');
+    background-size: cover; 
+    background-position: center; 
+    margin: 0; 
+    height: 100vh; 
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 1;
+}
+
+.Cabecalho {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    width: 100%;
+    background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.LogoImage {
+    width: 200px;
+    height: auto;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative; 
+    z-index: 2; 
+}
+
+h1 {
+    color: #fff;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+form {
+    margin-top: 95px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: rgba(9, 68, 24, 0.9); 
+    max-width: 90%; 
+    width: 500px;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    z-index: 3; 
+}
+
+select {
+    border: 1px solid;
+    height: 30px;
+    color: black;
+    background-color: white;
+    font-size: 16px;
+    padding-left: 10px;
+    border-color: rgb(0, 0, 0);
+    border-radius: 30px;
+    outline: none;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+ select option {
+    color: black;
+}
+
+ input {
+    border: 1px solid;
+    height: 30px;
+    color: black;
+    background-color: white;
+    font-size: 16px;
+    padding-left: 10px;
+    border-color: rgb(0, 0, 0);
+    border-radius: 30px;
+    outline: none;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+button {
+    border-radius: 25px;
+    background-color: rgb(23, 209, 79);
+    height: 40px;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 15px;
+    width: 100%;
+}
+
+ button:hover {
+    opacity: 0.5;
+}
+
+textarea {
+    border: 1px solid;
+    background-color: white;
+    font-size: 17px;
+    padding-left: 12px;
+    color: black;
+    border-color: rgb(0, 0, 0);
+    border-radius: 25px;
+    outline: none;
+    padding-top: 5px;
+    width: 100%;
+    resize: none; 
+    min-height: 60px;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px; 
+    }
+
+    form {
+        padding: 20px; 
+    }
+
+    .LogoImage {
+        width: 150px;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        font-size: 14px; 
+    }
+
+    form button {
+        font-size: 14px; 
+    }
+}
+
+@media (max-width: 480px) {
+    form {
+        max-width: 95%; 
+    }
+}

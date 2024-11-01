@@ -1,0 +1,52 @@
+.cards {
+    margin-top: 90px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+}
+
+.containerCards:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.CardHeader {
+    display: flex;
+    color: black;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.CardTitle {
+    color: black;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.Logo {
+    width: 20px;
+    height: 20px;
+}
+
+.bodyCard {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+
+    & label {
+        color: black
+    }
+}
+
+.Edit {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.Edit:focus {
+    outline: none;
+}
