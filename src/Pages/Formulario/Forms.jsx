@@ -53,7 +53,7 @@ function Forms() {
       Descricao: inputObs.current.value,
       DataSolicitacao: parsedDataSolicitacao,
       DataEmissao: dataEmissao,
-      Estado: 'Aberto',
+      Estado: 'Pendente',
       DataEncerrado: ""
     });
   

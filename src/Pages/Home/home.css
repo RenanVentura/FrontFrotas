@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr); 
     gap: 16px; 
-    margin-top: 150px;
+    margin-top: 80px;
 }
 
 .cards {
@@ -62,5 +62,34 @@
     & span {
         color: black;
         font-weight: normal;
+    }
+}
+
+@media (max-width: 1200px) {
+    .containerCards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .containerCards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .containerCards {
+        grid-template-columns: 1fr;
+        margin-top: 100px; 
+    }
+}
+
+@media (max-width: 400px) {
+    .CardTitle {
+        font-size: 1em; 
+    }
+
+    .bodyCard label {
+        font-size: 0.9em; 
     }
 }

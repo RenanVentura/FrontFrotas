@@ -1,0 +1,53 @@
+
+.modal-edit-close {
+    font-size: 24px; 
+    cursor: pointer;
+    color: #000000;
+}
+h2{
+    color: #000000;
+    align-items: center;
+}
+.modal-edit {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-edit-content {
+    position: relative; 
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 500px;
+}
+
+.modal-edit-header {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1; 
+    background: white; 
+    padding: 10px; 
+}
+
+.modal-edit-title {
+    margin: 0;
+}
+
+.modal-edit-close {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.modal-edit-form {
+    margin-top: 60px; 
+}

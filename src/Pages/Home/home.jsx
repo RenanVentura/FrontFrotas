@@ -3,9 +3,12 @@ import { useEffect, useState } from 'react';
 import api from '../../Services/api';
 import Logo from '../../assets/Logo Qually-Sem fundo LetraPreta.png';
 import icon from '../../assets/lapis.png';
+import ModalEdit from '../../Components/ModalEdit'
 
 function ListaSolicitacao() {
     const [solicitacao, setSolicitacao] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedData, setSelectedData] = useState(null);
 
     async function getSolicitacao() {
         try {
@@ -21,6 +24,18 @@ function ListaSolicitacao() {
         getSolicitacao();
     }, []);
 
+    const handleEditClick = (dados) => {
+        setSelectedData(dados);
+        setIsModalOpen(true);
+    };
+
+    const handleSave = (updatedData) => {
+        
+        console.log("Dados salvos:", updatedData);
+    
+        setIsModalOpen(false);
+    };
+
     return (
         <div className='container'>
             <div className='Cabecalho'>
@@ -31,7 +46,7 @@ function ListaSolicitacao() {
                     <div key={dados.id} className="cards">
                         <div className='CardHeader'>
                             <h2 className='CardTitle'>{dados.Equipamento}</h2>    
-                            <button className='Edit'>
+                            <button className='Edit' onClick={() => handleEditClick(dados)}>
                                 <img src={icon} alt="edit" className='Logo' />
                             </button>
                         </div>
@@ -49,6 +64,14 @@ function ListaSolicitacao() {
                     </div>
                 ))}
             </div>
+            {isModalOpen && (
+                <ModalEdit 
+                    isOpen={isModalOpen} 
+                    onClose={() => setIsModalOpen(false)} 
+                    onSave={handleSave} 
+                    initialData={selectedData} 
+                />
+            )}
         </div>
     );
 }
