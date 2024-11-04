@@ -1,14 +1,23 @@
 import './ModalEdit.css';
 import React, { useState, useEffect } from 'react';
+import Lixo from '../assets/Lixo.png';
+import Api from '../Services/api';
 
-const ModalEdit = ({ isOpen, onClose, onSave, initialData }) => {
+const ModalEdit = ({ isOpen, onClose, onSave, onDelete, initialData }) => {
     const [formData, setFormData] = useState(initialData || {});
 
     useEffect(() => {
         if (initialData) {
             setFormData({
                 ...initialData,
-                DataEncerrado: initialData.DataEncerrado ? initialData.DataEncerrado.split('T')[0] : '',
+                DataEncerrado: initialData.DataEncerrado 
+                    ? formatDate(initialData.DataEncerrado) 
+                    : formatDate(new Date()), // Define a data atual como valor padrão
+            });
+        } else {
+            setFormData({
+                ...formData,
+                DataEncerrado: formatDate(new Date()), // Define a data atual como valor padrão
             });
         }
     }, [initialData]);
@@ -20,28 +29,63 @@ const ModalEdit = ({ isOpen, onClose, onSave, initialData }) => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const formatDate = (date) => {
+        if (!date) return '';
+        const d = new Date(date);
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const year = d.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+    
+    const convertToApiFormat = (dateString) => {
+        const [day, month, year] = dateString.split('/');
+        return `${year}-${month}-${day}`; 
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const updatedData = {
-            ...formData,
-            DataEncerrado: formData.DataEncerrado ? new Date(formData.DataEncerrado).toISOString() : null,
-        };
+        try {
+            const updatedData = {
+                ...formData,
+                DataEncerrado: convertToApiFormat(formData.DataEncerrado), 
+            };
 
-        onSave(updatedData);
-        onClose();
+            const response = await Api.put(`/solicitacao/${initialData.id}`, updatedData);
+
+           
+            if (response.status === 200 || response.status === 201) {
+                console.log("Solicitação atualizada com sucesso:", response.data);
+                onSave(response.data);
+                onClose();
+                window.location.reload(); 
+            } else {
+                console.error("Resposta inesperada:", response);
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar a solicitação:", error);
+        }
     };
 
     return (
-         <form onSubmit={handleSubmit}>
-        <div className="modal-edit">
-            <div className="modal-edit-content">
-                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                    <h2 className="modal-edit-title">Editar Solicitação</h2>
-                    <span className="modal-edit-close" onClick={onClose}>&times;</span>
-                </div>
-                
-               
+        <form onSubmit={handleSubmit}>
+            <div className="modal-edit">
+                <div className="modal-edit-content">
+                    <div className="modal-edit-header">
+                        <h2 className="modal-edit-title">Editar Solicitação</h2>
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                            <span className="modal-edit-close" onClick={onClose}>&times;</span>
+                            <img
+                                src={Lixo}
+                                alt="Lixeira"
+                                className="modal-edit-trash"
+                                onClick={onDelete}
+                                style={{ width: '24px', height: '24px' }}
+                            />
+                        </div>
+                    </div>
                     <label className="modal-edit-label">
                         Status:
                         <input
@@ -56,11 +100,12 @@ const ModalEdit = ({ isOpen, onClose, onSave, initialData }) => {
                     <label className="modal-edit-label">
                         Data Encerrado:
                         <input
-                            type="date"
+                            type="text"
                             name="DataEncerrado"
                             className="modal-edit-input"
                             value={formData.DataEncerrado || ''}
                             onChange={handleChange}
+                            placeholder="DD/MM/YYYY"
                         />
                     </label>
                     <label className="modal-edit-label">
@@ -96,7 +141,6 @@ const ModalEdit = ({ isOpen, onClose, onSave, initialData }) => {
                             required
                         />
                     </label>
-
                     <label className="modal-edit-label">
                         Tipo de Serviço:
                         <input
@@ -140,11 +184,9 @@ const ModalEdit = ({ isOpen, onClose, onSave, initialData }) => {
                             required
                         />
                     </label>
-                    
                     <button type="submit" className="modal-edit-button">Salvar</button>
-              
+                </div>
             </div>
-        </div>
         </form>
     );
 };

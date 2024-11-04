@@ -54,6 +54,7 @@ function ListaSolicitacao() {
                             <label>Solicitante: <span>{dados.Solicitante}</span></label>
                             <label>Filial: <span>{dados.Filial}</span></label>
                             <label>Data Solicitação: <span>{dados.DataSolicitacao}</span></label>
+                            <label>Data Emissão: <span>{dados.DataEmissao}</span></label>
                             <label>Tipo de Serviço: <span>{dados.TipoServ}</span></label>
                             <label>Serviço/Item: <span>{dados.Servico}</span></label>
                             <label>Urgência: <span>{dados.Urgencia}</span></label>
