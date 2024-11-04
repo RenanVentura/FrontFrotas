@@ -21,12 +21,13 @@ h2{
 }
 
 .modal-edit-content {
+    margin-top: 25px;
     position: relative; 
     background: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 500px;
+    width: 450px;
 }
 
 .modal-edit-header {
@@ -50,4 +51,36 @@ h2{
 
 .modal-edit-form {
     margin-top: 60px; 
+}
+
+@media (max-width: 600px) {
+    .modal-edit-content {
+        padding: 15px; 
+        margin-top: 70px;
+        width: 400px;
+    }
+
+    .modal-edit-close {
+        font-size: 18px; 
+    }
+
+    h2 {
+        font-size: 20px; 
+    }
+}
+
+@media (max-width: 400px) {
+    .modal-edit-content {
+        padding: 10px; 
+        margin-top: 70px;
+        width: 320px;
+    }
+
+    .modal-edit-close {
+        font-size: 16px; 
+    }
+
+    h2 {
+        font-size: 18px;
+    }
 }
