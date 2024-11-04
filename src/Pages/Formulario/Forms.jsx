@@ -88,19 +88,19 @@ function Forms() {
         Filial:
         <select name="filial" ref={inputFilial}>
           <option>Selecione</option>
-          <option value="qually matriz">Qually Matriz</option>
-          <option value="qually bahia">Qually Bahia</option>
-          <option value="qually ceara">Qually Ceara</option>
-          <option value="qually paraiba">Qually Paraiba</option>
-          <option value="isaac cereais">Isaac Cereais</option>
-          <option value="isaac feno">Isaac Feno</option>
+          <option value="Qually Matriz">Qually Matriz</option>
+          <option value="Qually Bahia">Qually Bahia</option>
+          <option value="Qually Ceara">Qually Ceara</option>
+          <option value="Qually Paraiba">Qually Paraiba</option>
+          <option value="Isaac Cereais">Isaac Cereais</option>
+          <option value="Isaac Feno">Isaac Feno</option>
         </select>
         Tipo de Serviço:
         <select name="tipoServ" ref={inputTipoServico}>
           <option>Selecione</option>
-          <option value="mecanico">Mecânico</option>
-          <option value="eletrico">Elétrico</option>
-          <option value="boracheiro">Borracharia</option>
+          <option value="Mecanico">Mecânico</option>
+          <option value="Eletrico">Elétrico</option>
+          <option value="Boracheiro">Borracharia</option>
         </select>
         Serviço/Peça:
         <input name="servico" type='text' ref={inputServico} />

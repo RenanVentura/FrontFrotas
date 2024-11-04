@@ -1,28 +1,46 @@
+.containerCards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 16px; 
+    margin-top: 150px;
+}
+
 .cards {
-    margin-top: 90px;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 16px;
-    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.containerCards:hover {
+.cards:hover {
     transform: translateY(-5px);
     box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
 }
 
 .CardHeader {
     display: flex;
-    color: black;
-    justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .CardTitle {
     color: black;
-    text-align: center;
-    flex-grow: 1;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0;
+    text-align: left; 
+    flex: 1;
+}
+
+.Edit {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .Logo {
@@ -34,19 +52,15 @@
     display: flex;
     flex-direction: column;
     margin-top: 16px;
+}
 
-    & label {
-        color: black
+.bodyCard label {
+    color: black;
+    font-weight: bold;
+    margin-bottom: 4px;
+
+    & span {
+        color: black;
+        font-weight: normal;
     }
-}
-
-.Edit {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-}
-
-.Edit:focus {
-    outline: none;
 }
