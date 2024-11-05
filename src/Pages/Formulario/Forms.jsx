@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import './Forms.css';
 import Logo from '../../assets/Logo Qually-Sem fundo LetraPreta.png';
 import api from '../../Services/api';
+import ModalLoading from '../../Components/ModalLoading/ModalLoading.jsx';
+import ModalConfirm from '../../Components/ModalConfirm/ModalConfirm.jsx';
 
 function Forms() {
   const inputSolicitante = useRef();
@@ -11,7 +13,6 @@ function Forms() {
   const inputEquipamento = useRef();
   const inputUrgencia = useRef();
   const inputObs = useRef();
-  
 
   const formatDate = (date) => {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -19,13 +20,14 @@ function Forms() {
   };
 
   const [dataSolicitacao, setDataSolicitacao] = useState(formatDate(new Date()));
+  const [isLoading, setIsLoading] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false); // Estado para controlar o ModalConfirm
 
   const parseDate = (dateString) => {
     const [day, month, year] = dateString.split('/');
-    const date = new Date(`${year}-${month}-${day}T00:00:00`); // Define a data para 00:00:00
-    return date;
+    return new Date(`${year}-${month}-${day}T00:00:00`);
   };
-  
+
   async function sendInfo() {
     if (
       !inputSolicitante.current.value ||
@@ -40,37 +42,52 @@ function Forms() {
       alert('Por favor, preencha todos os campos corretamente!');
       return;
     }
-  
+
+    setIsLoading(true); // Mostra o modal de carregamento
+
     const parsedDataSolicitacao = formatDate(parseDate(dataSolicitacao));
     const dataEmissao = formatDate(new Date());
-  
-    await api.post('/solicitacao', {
-      Solicitante: inputSolicitante.current.value,
-      Filial: inputFilial.current.value,
-      TipoServ: inputTipoServico.current.value,
-      Servico: inputServico.current.value,
-      Equipamento: inputEquipamento.current.value,
-      Urgencia: inputUrgencia.current.value,
-      Descricao: inputObs.current.value,
-      DataSolicitacao: parsedDataSolicitacao,
-      DataEmissao: dataEmissao,
-      Estado: 'Pendente',
-      DataEncerrado: ""
-    });
-  
-    alert('Cadastrado!');
 
-    inputSolicitante.current.value = '';
-    inputFilial.current.value = 'Selecione';
-    inputTipoServico.current.value = 'Selecione';
-    inputServico.current.value = '';
-    inputEquipamento.current.value = '';
-    inputUrgencia.current.value = 'Selecione';
-    inputObs.current.value = '';
+    try {
+      await api.post('/solicitacao', {
+        Solicitante: inputSolicitante.current.value,
+        Filial: inputFilial.current.value,
+        TipoServ: inputTipoServico.current.value,
+        Servico: inputServico.current.value,
+        Equipamento: inputEquipamento.current.value,
+        Urgencia: inputUrgencia.current.value,
+        Descricao: inputObs.current.value,
+        DataSolicitacao: parsedDataSolicitacao,
+        DataEmissao: dataEmissao,
+        Estado: 'Pendente',
+        DataEncerrado: ""
+      });
+
+      setIsConfirmOpen(true); // Abre o ModalConfirm
+      // Limpar os campos após o cadastro
+      inputSolicitante.current.value = '';
+      inputFilial.current.value = 'Selecione';
+      inputTipoServico.current.value = 'Selecione';
+      inputServico.current.value = '';
+      inputEquipamento.current.value = '';
+      inputUrgencia.current.value = 'Selecione';
+      inputObs.current.value = '';
+    } catch (error) {
+      console.error("Erro ao cadastrar a solicitação:", error);
+      alert("Ocorreu um erro ao cadastrar a solicitação.");
+    } finally {
+      setIsLoading(false); // Esconde o modal de carregamento
+    }
   }
+
+  const closeConfirmModal = () => {
+    setIsConfirmOpen(false);
+  };
 
   return (
     <div className='container'>
+      <ModalLoading isLoading={isLoading} />
+      <ModalConfirm isOpen={isConfirmOpen} onClose={closeConfirmModal} message="Cadastrado com sucesso!" />
       <div className='Cabecalho'>
         <img src={Logo} alt="LogoQually" className='LogoImage' />
       </div>

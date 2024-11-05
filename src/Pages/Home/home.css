@@ -19,7 +19,7 @@
 
 .containerCards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(4, 1fr); 
     gap: 12px; 
    
     flex: 1; 
@@ -32,7 +32,7 @@
     padding: 16px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     width: 450px;
-    max-height: 300px; /* Ajuste a altura máxima do card */
+    max-height: auto; /* Ajuste a altura máxima do card */
     overflow: auto; /* Rolagem para todo o card */
     position: relative;
 }

@@ -5,6 +5,7 @@ import Logo from '../../assets/Logo Qually-Sem fundo LetraPreta.png';
 import icon from '../../assets/lapis.png';
 import ModalEdit from '../../Components/ModalEdit/ModalEdit.jsx';
 import ModalNotifica from '../../Components/ModalNotifica/ModalNotifica.jsx';
+import LoadingModal from '../../Components/ModalLoading/ModalLoading.jsx'; // Importe o modal de carregamento
 import Lixo from '../../assets/lixo.png';
 
 function ListaSolicitacao() {
@@ -14,15 +15,22 @@ function ListaSolicitacao() {
     const [selectedData, setSelectedData] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [expandedIds, setExpandedIds] = useState(new Set());
-    const [statusFilter, setStatusFilter] = useState(''); // Estado para o filtro de status
+    const [statusFilter, setStatusFilter] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
+    const itemsPerPage = 4;
 
+    // Função para buscar as solicitações
     async function getSolicitacao() {
+        setIsLoading(true); // Define como carregando antes da requisição
         try {
             const response = await api.get('/solicitacao');
             setSolicitacao(response.data);
-            console.log(response.data);
+            console.log('Dados de solicitação recebidos:', response.data);
         } catch (error) {
             console.error("Erro ao buscar solicitações:", error);
+        } finally {
+            setIsLoading(false); // Define como não carregando após a requisição
         }
     }
 
@@ -30,21 +38,39 @@ function ListaSolicitacao() {
         getSolicitacao();
     }, []);
 
+    // Filtragem por status
+    const filteredSolicitacoes = solicitacao.filter(item => {
+        if (statusFilter === '') return true;
+        return item.Estado === statusFilter;
+    });
+
+    // Paginação
+    const totalPages = Math.ceil(filteredSolicitacoes.length / itemsPerPage);
+    const currentItems = filteredSolicitacoes.slice(
+        (currentPage - 1) * itemsPerPage, 
+        currentPage * itemsPerPage
+    );
+
+    // Função para abrir o modal de edição
     const handleEditClick = (dados) => {
         setSelectedData(dados);
         setIsModalOpen(true);
     };
 
+    // Função para abrir o modal de confirmação de exclusão
     const handleDeleteClick = (id) => {
         setDeleteId(id);
         setIsNotificaOpen(true);
     };
 
+    // Função para deletar uma solicitação
     const handleDelete = async () => {
         if (deleteId) {
             try {
                 await api.delete(`/solicitacao/${deleteId}`);
-                setSolicitacao(prevSolicitacao => prevSolicitacao.filter(item => item.id !== deleteId));
+                setSolicitacao(prevSolicitacao => 
+                    prevSolicitacao.filter(item => item.id !== deleteId)
+                );
                 console.log("Solicitação deletada:", deleteId);
                 setDeleteId(null);
             } catch (error) {
@@ -54,11 +80,13 @@ function ListaSolicitacao() {
         setIsNotificaOpen(false);
     };
 
+    // Função para salvar as alterações no modal de edição
     const handleSave = (updatedData) => {
         console.log("Dados salvos:", updatedData);
         setIsModalOpen(false);
     };
 
+    // Função para expandir/ocultar a descrição
     const toggleExpand = (id) => {
         setExpandedIds(prev => {
             const newExpandedIds = new Set(prev);
@@ -71,28 +99,19 @@ function ListaSolicitacao() {
         });
     };
 
-    // Filtragem por status
-    const filteredSolicitacoes = solicitacao.filter(item => {
-        if (statusFilter === '') return true; // Retorna todos se não houver filtro
-        return item.Estado === statusFilter; // Filtra com base no status
-    });
-
-    // Paginação
-    const itemsPerPage = 6;
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(filteredSolicitacoes.length / itemsPerPage);
-    const currentItems = filteredSolicitacoes.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-
     return (
         <div className='container'>
             <div className='Cabecalho'>
                 <img src={Logo} alt="LogoQually" className='LogoImage' />
             </div>
     
-          
             <div className="filter">
                 <label htmlFor="status">Filtrar por Status:</label>
-                <select id="status" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+                <select
+                    id="status"
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                >
                     <option value="">Todos</option>
                     <option value="Pendente">Pendente</option>
                     <option value="Encerrado">Encerrado</option>
@@ -126,7 +145,7 @@ function ListaSolicitacao() {
                             {expandedIds.has(dados.id) ? (
                                 <label>Descrição: <span>{dados.Descricao}</span></label>
                             ) : (
-                                <label>Descrição: <span>{dados.Descricao.slice(0, 100)}...</span></label>
+                                <label>Descrição: <span>{dados.Descricao}</span></label>
                             )}
                             {dados.Descricao.length > 100 && !expandedIds.has(dados.id) && (
                                 <button className='show-more' onClick={() => toggleExpand(dados.id)}>
@@ -142,6 +161,7 @@ function ListaSolicitacao() {
                     </div>
                 ))}
             </div>
+            
             <div className="pagination">
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button
@@ -153,6 +173,9 @@ function ListaSolicitacao() {
                     </button>
                 ))}
             </div>
+            
+            {isLoading && <LoadingModal isLoading={isLoading} />} {/* Modal de carregamento */}
+
             {isModalOpen && (
                 <ModalEdit
                     isOpen={isModalOpen}
@@ -171,4 +194,5 @@ function ListaSolicitacao() {
         </div>
     );
 }
+
 export default ListaSolicitacao;
