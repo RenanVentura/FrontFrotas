@@ -1,9 +1,9 @@
 import './ModalEdit.css';
 import React, { useState, useEffect } from 'react';
-import Lixo from '../assets/Lixo.png';
-import Api from '../Services/api';
+import Lixo from '../../assets/Lixo.png';
+import Api from '../../Services/api';
 
-const ModalEdit = ({ isOpen, onClose, onSave, onDelete, initialData }) => {
+const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }) => {
     const [formData, setFormData] = useState(initialData || {});
 
     useEffect(() => {
@@ -12,12 +12,12 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete, initialData }) => {
                 ...initialData,
                 DataEncerrado: initialData.DataEncerrado 
                     ? formatDate(initialData.DataEncerrado) 
-                    : formatDate(new Date()), // Define a data atual como valor padrão
+                    : formatDate(new Date()), 
             });
         } else {
             setFormData({
                 ...formData,
-                DataEncerrado: formatDate(new Date()), // Define a data atual como valor padrão
+                DataEncerrado: formatDate(new Date()), 
             });
         }
     }, [initialData]);
@@ -40,11 +40,10 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete, initialData }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
             const updatedData = {
                 ...formData,
-                DataEncerrado: formData.DataEncerrado, // Mantém o formato DD/MM/YYYY
+                DataEncerrado: formData.DataEncerrado, 
             };
 
             const response = await Api.put(`/solicitacao/${initialData.id}`, updatedData);
@@ -62,6 +61,22 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete, initialData }) => {
         }
     };
 
+    const handleDelete = async () => {
+        try {
+            const response = await Api.delete(`/solicitacao/${initialData.id}`);
+            if (response.status === 200 || response.status === 204) {
+                console.log("Solicitação deletada com sucesso.");
+                onDelete(); 
+                onClose();
+                window.location.reload(); 
+            } else {
+                console.error("Erro ao deletar solicitação:", response);
+            }
+        } catch (error) {
+            console.error("Erro ao deletar a solicitação:", error);
+        }
+    };
+
     return (
         <form onSubmit={handleSubmit}>
             <div className="modal-edit">
@@ -74,21 +89,23 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete, initialData }) => {
                                 src={Lixo}
                                 alt="Lixeira"
                                 className="modal-edit-trash"
-                                onClick={onDelete}
-                                style={{ width: '24px', height: '24px' }}
+                                onClick={handleDelete} 
+                                style={{ width: '24px', height: '24px', cursor: 'pointer' }}
                             />
                         </div>
                     </div>
                     <label className="modal-edit-label">
                         Status:
-                        <input
-                            type="text"
-                            name="Estado"
-                            className="modal-edit-input"
-                            value={formData.Estado || ''}
-                            onChange={handleChange}
+                        <select 
+                            name="Estado" 
+                            className="modal-edit-input" 
+                            value={formData.Estado || ''} 
+                            onChange={handleChange} 
                             required
-                        />
+                        >
+                            <option value="Pendente">Pendente</option>
+                            <option value="Fechado">Fechado</option>
+                        </select>
                     </label>
                     <label className="modal-edit-label">
                         Data Encerrado:

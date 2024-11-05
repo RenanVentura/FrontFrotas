@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import api from '../../Services/api';
 import Logo from '../../assets/Logo Qually-Sem fundo LetraPreta.png';
 import icon from '../../assets/lapis.png';
-import ModalEdit from '../../Components/ModalEdit'
+import ModalEdit from '../../Components/ModalEdit/ModalEdit.jsx';
+import Lixo from '../../assets/lixo.png';
 
 function ListaSolicitacao() {
     const [solicitacao, setSolicitacao] = useState([]);
@@ -29,10 +30,18 @@ function ListaSolicitacao() {
         setIsModalOpen(true);
     };
 
+    const handleDelete = async (id) => {
+        try {
+            await api.delete(`/solicitacao/${id}`); 
+            setSolicitacao(prevSolicitacao => prevSolicitacao.filter(item => item.id !== id));
+            console.log("Solicitação deletada:", id);
+        } catch (error) {
+            console.error("Erro ao deletar solicitação:", error);
+        }
+    };
+
     const handleSave = (updatedData) => {
-        
         console.log("Dados salvos:", updatedData);
-    
         setIsModalOpen(false);
     };
 
@@ -45,10 +54,15 @@ function ListaSolicitacao() {
                 {solicitacao.map(dados => (
                     <div key={dados.id} className="cards">
                         <div className='CardHeader'>
-                            <h2 className='CardTitle'>{dados.Equipamento}</h2>    
-                            <button className='Edit' onClick={() => handleEditClick(dados)}>
-                                <img src={icon} alt="edit" className='Logo' />
-                            </button>
+                            <h2 className='CardTitle'>{dados.Equipamento}</h2>
+                            <div className="CardActions">
+                                <button className='Edit' onClick={() => handleEditClick(dados)}>
+                                    <img src={icon} alt="edit" className='Logo' />
+                                </button>
+                                <button className='Delete' onClick={() => handleDelete(dados.id)}>
+                                    <img src={Lixo} alt="delete" className='Logo' />
+                                </button>
+                            </div>
                         </div>
                         <div className='bodyCard'>
                             <label>Solicitante: <span>{dados.Solicitante}</span></label>
@@ -66,11 +80,11 @@ function ListaSolicitacao() {
                 ))}
             </div>
             {isModalOpen && (
-                <ModalEdit 
-                    isOpen={isModalOpen} 
-                    onClose={() => setIsModalOpen(false)} 
-                    onSave={handleSave} 
-                    initialData={selectedData} 
+                <ModalEdit
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    onSave={handleSave}
+                    initialData={selectedData}
                 />
             )}
         </div>

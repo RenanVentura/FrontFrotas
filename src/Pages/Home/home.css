@@ -1,3 +1,16 @@
+.CardActions {
+    display: flex;
+    align-items: center; 
+}
+
+.CardActions button {
+    background: none; 
+    border: none; 
+    margin-left: 10px; 
+    cursor: pointer; 
+}
+
+
 .containerCards {
     display: grid;
     grid-template-columns: repeat(4, 1fr); 
@@ -11,7 +24,7 @@
     border-radius: 8px;
     padding: 16px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 400px;
+    width: 420px;
     height: auto;
 }
 
@@ -71,11 +84,19 @@
     .containerCards {
         grid-template-columns: repeat(3, 1fr);
     }
+    .cards {
+        width: 300px;
+        height: auto;
+    }
 }
 
 @media (max-width: 900px) {
     .containerCards {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .cards {
+        width: 270px;
+        height: auto;
     }
 }
 
