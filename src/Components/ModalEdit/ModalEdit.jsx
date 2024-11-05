@@ -112,7 +112,7 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
                                 required
                             >
                                 <option value="Pendente">Pendente</option>
-                                <option value="Fechado">Fechado</option>
+                                <option value="Encerrado">Encerrado</option>
                             </select>
                         </label>
                         <label className="modal-edit-label">

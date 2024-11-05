@@ -4,16 +4,17 @@ import api from '../../Services/api';
 import Logo from '../../assets/Logo Qually-Sem fundo LetraPreta.png';
 import icon from '../../assets/lapis.png';
 import ModalEdit from '../../Components/ModalEdit/ModalEdit.jsx';
-import ModalNotifica from '../../Components/ModalNotifica/ModalNotifica.jsx'; 
+import ModalNotifica from '../../Components/ModalNotifica/ModalNotifica.jsx';
 import Lixo from '../../assets/lixo.png';
 
 function ListaSolicitacao() {
     const [solicitacao, setSolicitacao] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isNotificaOpen, setIsNotificaOpen] = useState(false); 
+    const [isNotificaOpen, setIsNotificaOpen] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
-    const [deleteId, setDeleteId] = useState(null); 
-    const [expandedIds, setExpandedIds] = useState(new Set()); // Para controlar quais cartões estão expandidos
+    const [deleteId, setDeleteId] = useState(null);
+    const [expandedIds, setExpandedIds] = useState(new Set());
+    const [statusFilter, setStatusFilter] = useState(''); // Estado para o filtro de status
 
     async function getSolicitacao() {
         try {
@@ -35,14 +36,14 @@ function ListaSolicitacao() {
     };
 
     const handleDeleteClick = (id) => {
-        setDeleteId(id); 
+        setDeleteId(id);
         setIsNotificaOpen(true);
     };
 
     const handleDelete = async () => {
         if (deleteId) {
             try {
-                await api.delete(`/solicitacao/${deleteId}`); 
+                await api.delete(`/solicitacao/${deleteId}`);
                 setSolicitacao(prevSolicitacao => prevSolicitacao.filter(item => item.id !== deleteId));
                 console.log("Solicitação deletada:", deleteId);
                 setDeleteId(null);
@@ -62,25 +63,42 @@ function ListaSolicitacao() {
         setExpandedIds(prev => {
             const newExpandedIds = new Set(prev);
             if (newExpandedIds.has(id)) {
-                newExpandedIds.delete(id); // Se já está expandido, remove
+                newExpandedIds.delete(id);
             } else {
-                newExpandedIds.add(id); // Caso contrário, adiciona
+                newExpandedIds.add(id);
             }
             return newExpandedIds;
         });
     };
 
+    // Filtragem por status
+    const filteredSolicitacoes = solicitacao.filter(item => {
+        if (statusFilter === '') return true; // Retorna todos se não houver filtro
+        return item.Estado === statusFilter; // Filtra com base no status
+    });
+
     // Paginação
-    const itemsPerPage = 6; // 3 colunas e 2 linhas
+    const itemsPerPage = 6;
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(solicitacao.length / itemsPerPage);
-    const currentItems = solicitacao.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const totalPages = Math.ceil(filteredSolicitacoes.length / itemsPerPage);
+    const currentItems = filteredSolicitacoes.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
         <div className='container'>
             <div className='Cabecalho'>
                 <img src={Logo} alt="LogoQually" className='LogoImage' />
             </div>
+    
+          
+            <div className="filter">
+                <label htmlFor="status">Filtrar por Status:</label>
+                <select id="status" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+                    <option value="">Todos</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Encerrado">Encerrado</option>
+                </select>
+            </div>
+
             <div className="containerCards">
                 {currentItems.map(dados => (
                     <div key={dados.id} className="cards">
@@ -96,6 +114,8 @@ function ListaSolicitacao() {
                             </div>
                         </div>
                         <div className='bodyCard'>
+                            <label>Status: <span>{dados.Estado}</span></label>
+                            <label>Data Encerrado: <span>{dados.DataEncerrado}</span></label>
                             <label>Solicitante: <span>{dados.Solicitante}</span></label>
                             <label>Filial: <span>{dados.Filial}</span></label>
                             <label>Data Solicitação: <span>{dados.DataSolicitacao}</span></label>
@@ -118,8 +138,6 @@ function ListaSolicitacao() {
                                     Mostrar Menos
                                 </button>
                             )}
-                            <label>Status: <span>{dados.Estado}</span></label>
-                            <label>Data Encerrado: <span>{dados.DataEncerrado}</span></label>
                         </div>
                     </div>
                 ))}
@@ -153,5 +171,4 @@ function ListaSolicitacao() {
         </div>
     );
 }
-
 export default ListaSolicitacao;

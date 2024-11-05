@@ -110,9 +110,9 @@ function Forms() {
         Urgência:
         <select name="urgencia" ref={inputUrgencia}>
           <option>Selecione</option>
-          <option value="urgente">Urgente</option>
-          <option value="corretiva">Corretiva</option>
-          <option value="programada">Programada</option>
+          <option value="Urgente">Urgente</option>
+          <option value="Corretiva">Corretiva</option>
+          <option value="Programada">Programada</option>
         </select>
         Descrição:
         <textarea rows={4} cols={50} className='Descricao' ref={inputObs}></textarea>

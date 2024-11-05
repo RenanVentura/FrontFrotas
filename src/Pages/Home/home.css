@@ -1,14 +1,27 @@
+.filter {
+    margin: 70px 0;
+ /* Alinha o texto e o seletor verticalmente */
+}
+
+.filter label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.filter select {
+    padding: 5px;
+    font-size: 1em;
+}
+
 .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; 
+    padding: 0 20px;
 }
 
 .containerCards {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
     gap: 12px; 
-    margin-top: 80px;
+   
     flex: 1; 
 }
 
@@ -19,8 +32,8 @@
     padding: 16px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     width: 450px;
-    max-height: 370px; 
-    overflow: hidden; 
+    max-height: 300px; /* Ajuste a altura máxima do card */
+    overflow: auto; /* Rolagem para todo o card */
     position: relative;
 }
 
@@ -139,7 +152,7 @@
 @media (max-width: 600px) {
     .containerCards {
         grid-template-columns: 1fr;
-        margin-top: 100px; 
+        margin-top: 80px; /* Mantendo a mesma distância nas telas menores */
     }
 }
 
