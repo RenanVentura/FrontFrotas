@@ -22,9 +22,10 @@ function Forms() {
 
   const parseDate = (dateString) => {
     const [day, month, year] = dateString.split('/');
-    return new Date(`${year}-${month}-${day}`);
+    const date = new Date(`${year}-${month}-${day}T00:00:00`); // Define a data para 00:00:00
+    return date;
   };
-
+  
   async function sendInfo() {
     if (
       !inputSolicitante.current.value ||

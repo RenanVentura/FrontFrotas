@@ -38,24 +38,17 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete, initialData }) => {
         return `${day}/${month}/${year}`;
     };
 
-    
-    const convertToApiFormat = (dateString) => {
-        const [day, month, year] = dateString.split('/');
-        return `${year}-${month}-${day}`; 
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const updatedData = {
                 ...formData,
-                DataEncerrado: convertToApiFormat(formData.DataEncerrado), 
+                DataEncerrado: formData.DataEncerrado, // Mantém o formato DD/MM/YYYY
             };
 
             const response = await Api.put(`/solicitacao/${initialData.id}`, updatedData);
 
-           
             if (response.status === 200 || response.status === 201) {
                 console.log("Solicitação atualizada com sucesso:", response.data);
                 onSave(response.data);
