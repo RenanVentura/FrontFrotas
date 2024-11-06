@@ -93,9 +93,9 @@ function Forms() {
       </div>
       <form>
         <h1>Solicitação de Serviço</h1>
-        Solicitante:
+        <span>Solicitante:</span>
         <input name="solicitante" type='text' ref={inputSolicitante} />
-        Data da Solicitação:
+        <span>Data da Solicitação:</span>
         <input
           name="datasolicitacao"
           type='text'
@@ -103,7 +103,7 @@ function Forms() {
           onChange={(e) => setDataSolicitacao(e.target.value)}
           placeholder="DD/MM/AAAA"
         />
-        Filial:
+         <span>Filial:</span>
         <select name="filial" ref={inputFilial}>
           <option>Selecione</option>
           <option value="Qually Matriz">Qually Matriz</option>
@@ -113,25 +113,25 @@ function Forms() {
           <option value="Isaac Cereais">Isaac Cereais</option>
           <option value="Isaac Feno">Isaac Feno</option>
         </select>
-        Tipo de Serviço:
+        <span>Tipo de Serviço:</span>
         <select name="tipoServ" ref={inputTipoServico}>
           <option>Selecione</option>
           <option value="Mecanico">Mecânico</option>
           <option value="Eletrico">Elétrico</option>
           <option value="Boracheiro">Borracharia</option>
         </select>
-        Serviço/Peça:
+        <span>Serviço/Peça:</span>
         <input name="servico" type='text' ref={inputServico} />
-        Equipamento:
+        <span>Equipamento:</span>
         <input name="equipamento" type='text' ref={inputEquipamento} />
-        Urgência:
+        <span>Urgência:</span>
         <select name="urgencia" ref={inputUrgencia}>
           <option>Selecione</option>
           <option value="Urgente">Urgente</option>
           <option value="Corretiva">Corretiva</option>
           <option value="Programada">Programada</option>
         </select>
-        Descrição:
+        <span>Descrição:</span>
         <textarea rows={4} cols={50} className='Descricao' ref={inputObs}></textarea>
 
         <button type='button' onClick={sendInfo}>Finalizar Solicitação</button>
