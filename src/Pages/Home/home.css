@@ -6,6 +6,7 @@
 .filter label {
     margin-right: 10px;
     font-weight: bold;
+    color: white;
 }
 
 .filter select {
