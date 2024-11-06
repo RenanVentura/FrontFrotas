@@ -1,18 +1,18 @@
-.modalOverlay {
+.modalOverlayConfirm {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999;
 }
-
-.modalContent {
-    background: #2ecc71; /* Verde suave */
+  
+.modalContentConfirm {
+    background: #28cc19; /* Verde mais suave */
     padding: 20px;
     border-radius: 8px;
     text-align: center;
@@ -21,38 +21,43 @@
     width: 300px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
-
-.modalHeader {
-    display: flex;
-    justify-content: flex-end; /* Alinha o X no canto direito */
-    position: absolute;
-    top: 10px;
-    right: 10px;
+  
+.modalHeaderConfirm {
+    display: flex; /* Usar flexbox para alinhar os itens na mesma linha */
+    align-items: center; /* Alinhar verticalmente */
+    justify-content: space-between; /* Espaçar os elementos */
 }
-
-.closeButton {
+  
+.closeButtonConfirm {
+    position: relative;
     border: none;
-    background: transparent; /* Botão transparente */
-    color: #ffffff; /* Cor do "X" */
-    font-size: 20px;
+    background: #27d630; /* Vermelho para destacar */
+    color: white;
+    font-size: 18px;
     cursor: pointer;
-    transition: color 0.3s;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
 }
-
-.closeButton:hover {
-    color: #ffcccc; /* Muda a cor do "X" ao passar o mouse */
+  
+.closeButtonConfirm:hover {
+    background: #21dd59; /* Muda a cor ao passar o mouse */
 }
-
-.message {
+  
+.messageConfirm {
     color: #fff;
+    margin-left: 10px;
     font-size: 18px;
     font-weight: bold;
-    margin-top: 30px; /* Ajuste de margem para não sobrepor o botão */
 }
-
+  
 @media (max-width: 600px) {
-    .modalContent {
-        width: 80%;
-        padding: 15px;
+    .modalContentConfirm {
+      width: 80%;
+      padding: 15px;
     }
 }
