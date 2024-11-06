@@ -5,8 +5,9 @@ import Logo from '../../assets/Logo Qually-Sem fundo LetraPreta.png';
 import icon from '../../assets/lapis.png';
 import ModalEdit from '../../Components/ModalEdit/ModalEdit.jsx';
 import ModalNotifica from '../../Components/ModalNotifica/ModalNotifica.jsx';
-import LoadingModal from '../../Components/ModalLoading/ModalLoading.jsx'; // Importe o modal de carregamento
+import LoadingModal from '../../Components/ModalLoading/ModalLoading.jsx';
 import Lixo from '../../assets/lixo.png';
+import * as XLSX from 'xlsx'; // Importe a biblioteca XLSX
 
 function ListaSolicitacao() {
     const [solicitacao, setSolicitacao] = useState([]);
@@ -17,12 +18,12 @@ function ListaSolicitacao() {
     const [expandedIds, setExpandedIds] = useState(new Set());
     const [statusFilter, setStatusFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
+    const [isLoading, setIsLoading] = useState(true);
     const itemsPerPage = 4;
 
     // Função para buscar as solicitações
     async function getSolicitacao() {
-        setIsLoading(true); // Define como carregando antes da requisição
+        setIsLoading(true);
         try {
             const response = await api.get('/solicitacao');
             setSolicitacao(response.data);
@@ -30,7 +31,7 @@ function ListaSolicitacao() {
         } catch (error) {
             console.error("Erro ao buscar solicitações:", error);
         } finally {
-            setIsLoading(false); // Define como não carregando após a requisição
+            setIsLoading(false);
         }
     }
 
@@ -44,10 +45,19 @@ function ListaSolicitacao() {
         return item.Estado === statusFilter;
     });
 
+    // Função para exportar dados para Excel
+    const exportToExcel = () => {
+        console.log(filteredSolicitacoes); // Verifique os dados que serão exportados
+        const ws = XLSX.utils.json_to_sheet(filteredSolicitacoes);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Solicitações');
+        XLSX.writeFile(wb, 'solicitacoes.xlsx');
+    };
+
     // Paginação
     const totalPages = Math.ceil(filteredSolicitacoes.length / itemsPerPage);
     const currentItems = filteredSolicitacoes.slice(
-        (currentPage - 1) * itemsPerPage, 
+        (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
 
@@ -68,7 +78,7 @@ function ListaSolicitacao() {
         if (deleteId) {
             try {
                 await api.delete(`/solicitacao/${deleteId}`);
-                setSolicitacao(prevSolicitacao => 
+                setSolicitacao(prevSolicitacao =>
                     prevSolicitacao.filter(item => item.id !== deleteId)
                 );
                 console.log("Solicitação deletada:", deleteId);
@@ -104,7 +114,11 @@ function ListaSolicitacao() {
             <div className='Cabecalho'>
                 <img src={Logo} alt="LogoQually" className='LogoImage' />
             </div>
-    
+
+            <div className="top-actions">
+                <button className="export-btn" onClick={exportToExcel}>Exportar para Excel</button>
+            </div>
+
             <div className="filter">
                 <label htmlFor="status">Filtrar por Status:</label>
                 <select
@@ -161,7 +175,7 @@ function ListaSolicitacao() {
                     </div>
                 ))}
             </div>
-            
+
             <div className="pagination">
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button
@@ -173,8 +187,8 @@ function ListaSolicitacao() {
                     </button>
                 ))}
             </div>
-            
-            {isLoading && <LoadingModal isLoading={isLoading} />} {/* Modal de carregamento */}
+
+            {isLoading && <LoadingModal isLoading={isLoading} />}
 
             {isModalOpen && (
                 <ModalEdit
