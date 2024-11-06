@@ -31,7 +31,7 @@
 .closeButtonConfirm {
     position: relative;
     border: none;
-    background: #27d630; /* Vermelho para destacar */
+    background: #0c7412; /* Vermelho para destacar */
     color: white;
     font-size: 18px;
     cursor: pointer;
@@ -45,7 +45,7 @@
 }
   
 .closeButtonConfirm:hover {
-    background: #21dd59; /* Muda a cor ao passar o mouse */
+    background: #096625de; /* Muda a cor ao passar o mouse */
 }
   
 .messageConfirm {
