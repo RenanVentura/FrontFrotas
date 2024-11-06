@@ -1,8 +1,10 @@
 import './ModalEdit.css';
 import React, { useState, useEffect } from 'react';
-import LixoImage from '../../assets/Lixo.png';
+import LixoImage from '../../assets/lixo.png';
 import Api from '../../Services/api';
 import NotificaModal from '../ModalNotifica//ModalNotifica.jsx'
+
+
 
 const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }) => {
     const [formData, setFormData] = useState(initialData || {});
