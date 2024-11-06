@@ -21,7 +21,7 @@ function ListaSolicitacao() {
     const [isLoading, setIsLoading] = useState(true);
     const itemsPerPage = 4;
 
-    // Função para buscar as solicitações
+
     async function getSolicitacao() {
         setIsLoading(true);
         try {
