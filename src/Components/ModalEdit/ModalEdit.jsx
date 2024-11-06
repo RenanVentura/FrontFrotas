@@ -1,6 +1,6 @@
 import './ModalEdit.css';
 import React, { useState, useEffect } from 'react';
-import LixoImage from '../../assets/lixo.png';
+import LixoImage from '../../assets/Lixo.png';
 import Api from '../../Services/api';
 import NotificaModal from '../ModalNotifica//ModalNotifica.jsx'
 
