@@ -1,6 +1,6 @@
 import './ModalEdit.css';
 import React, { useState, useEffect } from 'react';
-import Lixo from '../../assets/Lixo.png';
+import LixoIamge from '../../assets/Lixo.png';
 import Api from '../../Services/api';
 import NotificaModal from '../ModalNotifica//ModalNotifica.jsx'
 
@@ -94,7 +94,7 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
                             <div style={{ display: 'flex', gap: '10px' }}>
                                 <span className="modal-edit-close" onClick={onClose}>&times;</span>
                                 <img
-                                    src={Lixo}
+                                    src={LixoIamge}
                                     alt="Lixeira"
                                     className="modal-edit-trash"
                                     onClick={handleDeleteClick} 
