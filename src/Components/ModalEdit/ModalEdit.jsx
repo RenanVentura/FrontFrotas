@@ -2,13 +2,13 @@ import './ModalEdit.css';
 import React, { useState, useEffect } from 'react';
 import lixo from '../../assets/lixo.png';
 import Api from '../../Services/api';
-import NotificaModal from '../ModalNotifica//ModalNotifica.jsx'
-
-
+import NotificaModal from '../ModalNotifica//ModalNotifica.jsx';
+import ModalConfirm from '../ModalEditConfirm/ModalEditConfirm.jsx';
 
 const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }) => {
     const [formData, setFormData] = useState(initialData || {});
-    const [isNotificaOpen, setNotificaOpen] = useState(false); 
+    const [isNotificaOpen, setNotificaOpen] = useState(false);
+    const [isConfirmOpen, setConfirmOpen] = useState(false); // Estado para ModalConfirm
 
     useEffect(() => {
         if (initialData) {
@@ -56,7 +56,7 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
                 console.log("Solicitação atualizada com sucesso:", response.data);
                 onSave(response.data);
                 onClose();
-                window.location.reload(); 
+                setConfirmOpen(true); // Abre o ModalConfirm ao salvar
             } else {
                 console.error("Resposta inesperada:", response);
             }
@@ -213,6 +213,10 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
                 isOpen={isNotificaOpen} 
                 onClose={() => setNotificaOpen(false)} 
                 onConfirm={handleDelete} 
+            />
+            <ModalConfirm 
+                isOpen={isConfirmOpen} 
+                onClose={() => setConfirmOpen(false)} 
             />
         </>
     );
