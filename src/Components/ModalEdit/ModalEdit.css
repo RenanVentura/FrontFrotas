@@ -1,6 +1,6 @@
-/* Estilos para o ModalEdit */
 
 .modal-edit {
+    margin-top: 50px;
     position: fixed;
     top: 0;
     left: 0;
@@ -41,7 +41,7 @@
     align-items: center;
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 10px;
-    margin-bottom: 15px;
+    /* margin-bottom: 50px; */
 }
 
 .modal-edit-title {
@@ -65,7 +65,7 @@
 .modal-edit-label {
     font-size: 16px;
     color: #333333;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     display: block;
     font-weight: 500;
 }
@@ -73,7 +73,7 @@
 .modal-edit-input, .modal-edit-textarea, .modal-edit-select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 15px;
@@ -105,7 +105,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 .modal-edit-button:hover {
