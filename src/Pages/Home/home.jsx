@@ -129,7 +129,7 @@ function ListaSolicitacao() {
                     <option value="">Todos</option>
                     <option value="Pendente">Pendente</option>
                     <option value="Encerrado">Encerrado</option>
-                    <option value="Cancelado">Encerrado</option>
+                    <option value="Cancelado">Cancelado</option>
                 </select>
             </div>
 
