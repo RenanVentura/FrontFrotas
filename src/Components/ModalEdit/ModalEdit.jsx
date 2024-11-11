@@ -217,5 +217,3 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
         </>
     );
 };
-
-export default ModalEdit;
