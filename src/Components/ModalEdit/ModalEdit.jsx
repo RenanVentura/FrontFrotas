@@ -115,6 +115,7 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
                             >
                                 <option value="Pendente">Pendente</option>
                                 <option value="Encerrado">Encerrado</option>
+                                <option value="Encerrado">Cancelado</option>
                             </select>
                         </label>
                         <label className="modal-edit-label">
