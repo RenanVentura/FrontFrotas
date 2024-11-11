@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx'; // Importe a biblioteca XLSX
 
 function ListaSolicitacao() {
     const [solicitacao, setSolicitacao] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(true);
     const [isNotificaOpen, setIsNotificaOpen] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
     const [deleteId, setDeleteId] = useState(null);

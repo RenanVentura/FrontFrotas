@@ -70,16 +70,20 @@
     font-weight: 500;
 }
 
-.modal-edit-input, .modal-edit-textarea, .modal-edit-select {
+.modal-edit-select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 15px;
-    color: #333333;
+    color: #333333; /* Garantindo que o texto seja preto */
     background-color: #f9f9f9;
     transition: border-color 0.3s ease;
+
+        & option {
+            color: black;
+        }
 }
 
 .modal-edit-input:focus, 
