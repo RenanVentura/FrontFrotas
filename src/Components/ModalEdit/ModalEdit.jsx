@@ -50,7 +50,7 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
                 DataEncerrado: formData.DataEncerrado, 
             };
 
-            const response = await Api.put(`/solicitacao/${initialData.id}, updatedData`);
+            const response = await Api.put(`/solicitacao/${initialData.id}`, updatedData);
 
             if (response.status === 200 || response.status === 201) {
                 console.log("Solicitação atualizada com sucesso:", response.data);
