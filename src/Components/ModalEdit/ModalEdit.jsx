@@ -3,12 +3,11 @@ import React, { useState, useEffect } from 'react';
 import lixo from '../../assets/lixo.png';
 import Api from '../../Services/api';
 import NotificaModal from '../ModalNotifica//ModalNotifica.jsx';
-import ModalConfirm from '../ModalEditConfirm/ModalEditConfirm.jsx';
 
 const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }) => {
     const [formData, setFormData] = useState(initialData || {});
     const [isNotificaOpen, setNotificaOpen] = useState(false);
-    const [isConfirmOpen, setConfirmOpen] = useState(false); // Estado para ModalConfirm
+    const [showSaveConfirmation, setShowSaveConfirmation] = useState(false); // Nova variável para controlar a exibição da confirmação
 
     useEffect(() => {
         if (initialData) {
@@ -55,8 +54,9 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
             if (response.status === 200 || response.status === 201) {
                 console.log("Solicitação atualizada com sucesso:", response.data);
                 onSave(response.data);
+                setShowSaveConfirmation(true); // Exibe a confirmação de salvamento
                 onClose();
-                setConfirmOpen(true); // Abre o ModalConfirm ao salvar
+                setTimeout(() => window.location.reload(), 500); // Atualiza a página após um breve atraso
             } else {
                 console.error("Resposta inesperada:", response);
             }
@@ -210,13 +210,9 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
                 </div>
             </form>
             <NotificaModal 
-                isOpen={isNotificaOpen} 
-                onClose={() => setNotificaOpen(false)} 
-                onConfirm={handleDelete} 
-            />
-            <ModalConfirm 
-                isOpen={isConfirmOpen} 
-                onClose={() => setConfirmOpen(false)} 
+                isOpen={isNotificaOpen || showSaveConfirmation} // Exibe o modal para exclusão ou confirmação de salvamento
+                onClose={() => { setNotificaOpen(false); setShowSaveConfirmation(false); }} 
+                onConfirm={isNotificaOpen ? handleDelete : null} // Chama a função apropriada com base no modal
             />
         </>
     );
