@@ -1,100 +1,145 @@
+/* Estilos para o ModalEdit */
 
-.modal-edit-close {
-    font-size: 24px; 
-    cursor: pointer;
-    color: #000000;
-}
-h2{
-    color: #000000;
-    align-items: center;
-}
 .modal-edit {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6); /* Overlay mais escuro */
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: fadeIn 0.3s ease; /* Animação de entrada */
+    z-index: 1000;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .modal-edit-content {
-    margin-top: 25px;
-    position: relative; 
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 450px;
+    background: #ffffff; /* Fundo branco elegante */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    padding: 25px;
+    width: 500px;
+    max-width: 90%; /* Responsivo */
+    transform: translateY(-20px); /* Suave deslocamento na entrada */
+    animation: slideUp 0.3s ease forwards;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(-20px); }
+    to { transform: translateY(0); }
 }
 
 .modal-edit-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    padding: 10px;
-}
-
-.modal-edit-label{
-    color: #000000;
-}
-
-.modal-edit-close,
-.modal-edit-trash {
-    font-size: 24px;
-    cursor: pointer;
-    color: #000000;
-}
-
-.modal-edit-trash {
-    display: flex;
-    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .modal-edit-title {
+    color: #333333;
+    font-size: 22px;
+    font-weight: bold;
     margin: 0;
 }
 
 .modal-edit-close {
+    font-size: 22px;
     cursor: pointer;
-    font-size: 20px;
+    color: #888888;
+    transition: color 0.3s ease;
 }
 
-.modal-edit-form {
-    margin-top: 60px; 
+.modal-edit-close:hover {
+    color: #ff5c5c;
 }
 
-@media (max-width: 600px) {
+.modal-edit-label {
+    font-size: 16px;
+    color: #333333;
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 500;
+}
+
+.modal-edit-input, .modal-edit-textarea, .modal-edit-select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #333333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+.modal-edit-input:focus, 
+.modal-edit-textarea:focus, 
+.modal-edit-select:focus {
+    border-color: #4CAF50; /* Destaque em verde */
+    outline: none;
+}
+
+.modal-edit-textarea {
+    resize: vertical; /* Permite redimensionamento apenas vertical */
+    min-height: 80px;
+}
+
+.modal-edit-button {
+    background-color: #4CAF50; /* Verde suave */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.modal-edit-button:hover {
+    background-color: #45a049; /* Leve escurecimento no hover */
+}
+
+.modal-edit-trash {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    transition: opacity 0.3s ease;
+}
+
+.modal-edit-trash:hover {
+    opacity: 0.7; /* Leve efeito ao passar o cursor */
+}
+
+/* Estilos Responsivos */
+@media (max-width: 768px) {
     .modal-edit-content {
-        padding: 15px; 
-        margin-top: 70px;
-        width: 400px;
+        width: 90%;
     }
 
-    .modal-edit-close {
-        font-size: 18px; 
-    }
-
-    h2 {
-        font-size: 20px; 
+    .modal-edit-title {
+        font-size: 20px;
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
     .modal-edit-content {
-        padding: 10px; 
-        margin-top: 70px;
-        width: 320px;
+        padding: 20px;
     }
 
-    .modal-edit-close {
-        font-size: 16px; 
-    }
-
-    h2 {
+    .modal-edit-title {
         font-size: 18px;
     }
 }
