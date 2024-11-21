@@ -61,7 +61,7 @@ function Forms() {
         DataEmissao: dataEmissao,
         Estado: 'Pendente',
         DataEncerrado: "",
-        StatusDelete: true,
+        StatusDelete: 'true',
         NumeroDoc:1
       });
 
