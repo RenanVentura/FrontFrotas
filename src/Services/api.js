@@ -2,7 +2,8 @@ import axios from 'axios';
 
 // Criação da instância do axios com configurações básicas
 const api = axios.create({
-    baseURL: 'https://backfrotas.onrender.com', // URL base para todas as requisições
+    baseURL: 'https://backfrotas.onrender.com',
+    // baseURL: 'http://localhost:3000/', // URL base para todas as requisições
     timeout: 5000, // Tempo limite de 5 segundos para cada requisição
     headers: {
         'Content-Type': 'application/json', // Tipo de conteúdo JSON por padrão
