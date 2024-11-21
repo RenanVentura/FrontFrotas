@@ -62,12 +62,11 @@ function Forms() {
         Estado: 'Pendente',
         DataEncerrado: "",
         StatusDelete: true,
-        Numero:1,
-        Teste: 'teste'
+        Numero:1
       });
 
-      setIsConfirmOpen(true); // Abre o ModalConfirm
-      // Limpar os campos após o cadastro
+      setIsConfirmOpen(true); 
+
       inputSolicitante.current.value = '';
       inputFilial.current.value = 'Selecione';
       inputTipoServico.current.value = 'Selecione';
