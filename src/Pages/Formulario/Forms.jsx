@@ -62,7 +62,8 @@ function Forms() {
         Estado: 'Pendente',
         DataEncerrado: "",
         StatusDelete: true,
-        Numero:1
+        Numero:1,
+        Teste: 'teste'
       });
 
       setIsConfirmOpen(true); // Abre o ModalConfirm
