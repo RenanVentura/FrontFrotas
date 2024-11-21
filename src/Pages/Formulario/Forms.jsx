@@ -62,7 +62,7 @@ function Forms() {
         Estado: 'Pendente',
         DataEncerrado: "",
         StatusDelete: true,
-        Numero:1
+        NumeroDoc:1
       });
 
       setIsConfirmOpen(true); 
