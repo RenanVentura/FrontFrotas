@@ -25,7 +25,11 @@ function ListaSolicitacao() {
     async function getSolicitacao() {
         setIsLoading(true);
         try {
-            const response = await api.get('/solicitacao');
+            const response = await api.get('/solicitacao',{
+                params: {
+                    StatusDelete: true
+                }
+            });
             setSolicitacao(response.data);
             console.log('Dados de solicitação recebidos:', response.data);
         } catch (error) {
@@ -77,17 +81,20 @@ function ListaSolicitacao() {
     const handleDelete = async () => {
         if (deleteId) {
             try {
-                await api.delete(`/solicitacao/${deleteId}`);
+                await api.put(`/solicitacao/${deleteId}`, {StatusDelete: false});
                 setSolicitacao(prevSolicitacao =>
-                    prevSolicitacao.filter(item => item.id !== deleteId)
+                    prevSolicitacao.map(item =>
+                        item.id === deleteId ? { ...item, StatusDelete: false } : item
+                    )
                 );
-                console.log("Solicitação deletada:", deleteId);
+                console.log("Status de exclusão alterado para false:", deleteId);
                 setDeleteId(null);
             } catch (error) {
-                console.error("Erro ao deletar solicitação:", error);
+                console.error("Erro ao alterar status de exclusão:", error);
             }
         }
         setIsNotificaOpen(false);
+    
     };
 
     // Função para salvar as alterações no modal de edição
