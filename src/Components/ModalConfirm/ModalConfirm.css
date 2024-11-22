@@ -1,3 +1,9 @@
+.numeroDocConfirm {
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
 .modalOverlayConfirm {
     position: fixed;
     top: 0;

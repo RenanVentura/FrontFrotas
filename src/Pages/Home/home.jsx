@@ -79,20 +79,25 @@ function ListaSolicitacao() {
     const handleDelete = async () => {
         if (deleteId) {
             try {
-                await api.put(`/solicitacao/${deleteId}`, {StatusDelete: false});
+                // Atualizando o StatusDelete para false
+                await api.put(`/solicitacao/${deleteId}`, { StatusDelete: false });
+                
+                // Atualiza o estado da lista de solicitações para refletir a exclusão
                 setSolicitacao(prevSolicitacao =>
                     prevSolicitacao.map(item =>
                         item.id === deleteId ? { ...item, StatusDelete: false } : item
                     )
                 );
                 console.log("Status de exclusão alterado para false:", deleteId);
+    
+                // Recarrega os dados
+                getSolicitacao();
                 setDeleteId(null);
             } catch (error) {
                 console.error("Erro ao alterar status de exclusão:", error);
             }
         }
         setIsNotificaOpen(false);
-    
     };
 
     // Função para salvar as alterações no modal de edição

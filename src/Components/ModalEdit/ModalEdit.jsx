@@ -2,11 +2,9 @@ import './ModalEdit.css';
 import React, { useState, useEffect } from 'react';
 import lixo from '../../assets/lixo.png';
 import Api from '../../Services/api';
-import NotificaModal from '../ModalNotifica//ModalNotifica.jsx'
+import NotificaModal from '../ModalNotifica/ModalNotifica.jsx';
 
-
-
-const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => { }, initialData }) => {
+const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }) => {
     const [formData, setFormData] = useState(initialData || {});
     const [isNotificaOpen, setNotificaOpen] = useState(false);
 
@@ -56,7 +54,7 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => { }, initialData 
                 console.log("Solicitação atualizada com sucesso:", response.data);
                 onSave(response.data);
                 onClose();
-                window.location.reload();
+                window.location.reload(); // Atualiza a página após salvar
             } else {
                 console.error("Resposta inesperada:", response);
             }
@@ -77,7 +75,7 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => { }, initialData 
                 console.log("Solicitação marcada como deletada com sucesso.");
                 onDelete(); // Chama o callback para atualizar a UI
                 onClose();  // Fecha o modal
-                window.location.reload(); // Recarrega a página, se necessário
+                window.location.reload(); // Atualiza a página após deletar
             } else {
                 console.error("Erro ao atualizar a solicitação:", response);
             }
@@ -218,6 +216,5 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => { }, initialData 
         </>
     );
 };
-
 
 export default ModalEdit;

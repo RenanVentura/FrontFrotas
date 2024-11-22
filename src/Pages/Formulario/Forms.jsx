@@ -98,7 +98,7 @@ function Forms() {
   return (
     <div className='container'>
       <ModalLoading isLoading={isLoading} />
-      <ModalConfirm isOpen={isConfirmOpen} onClose={closeConfirmModal} message="Cadastrado com sucesso!" />
+      <ModalConfirm isOpen={isConfirmOpen} onClose={closeConfirmModal} numeroDoc={numeroDoc} message="Cadastrado com sucesso!" />
       <div className='Cabecalho'>
         <img src={Logo} alt="LogoQually" className='LogoImage' />
       </div>
