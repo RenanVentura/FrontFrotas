@@ -49,6 +49,11 @@ function Forms() {
     const dataEmissao = formatDate(new Date());
 
     try {
+
+      const response = await api.get('/solicitacao/max-numero-doc');
+        const maxNumeroDoc = response.data.maxNumeroDoc || 0; // Se não houver registros, começa do 0
+        const newNumeroDoc = maxNumeroDoc + 1;
+
       await api.post('/solicitacao', {
         Solicitante: inputSolicitante.current.value,
         Filial: inputFilial.current.value,
@@ -61,8 +66,8 @@ function Forms() {
         DataEmissao: dataEmissao,
         Estado: 'Pendente',
         DataEncerrado: "",
-        StatusDelete: 'true',
-        NumeroDoc:1
+        StatusDelete: true,
+        NumeroDoc:newNumeroDoc
       });
 
       setIsConfirmOpen(true); 
