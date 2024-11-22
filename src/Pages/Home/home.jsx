@@ -25,13 +25,11 @@ function ListaSolicitacao() {
     async function getSolicitacao() {
         setIsLoading(true);
         try {
-            const response = await api.get('/solicitacao',{
-                params: {
-                    StatusDelete: true
-                }
-            });
-            setSolicitacao(response.data);
-            console.log('Dados de solicitação recebidos:', response.data);
+            const response = await api.get('/solicitacao');
+            // Filtra apenas as solicitações com StatusDelete == true
+            const filteredSolicitacoes = response.data.filter(item => item.StatusDelete === true);
+            setSolicitacao(filteredSolicitacoes);
+            console.log('Dados de solicitação recebidos:', filteredSolicitacoes);
         } catch (error) {
             console.error("Erro ao buscar solicitações:", error);
         } finally {
