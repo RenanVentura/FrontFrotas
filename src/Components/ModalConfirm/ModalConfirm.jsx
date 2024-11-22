@@ -1,6 +1,6 @@
 import './ModalConfirm.css';  
 
-function ModalConfirm({ isOpen, onClose }) {
+function ModalConfirm({ isOpen, onClose, numeroDoc }) {
   if (!isOpen) return null;
 
   return (
