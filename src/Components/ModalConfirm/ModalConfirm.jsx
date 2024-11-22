@@ -10,7 +10,7 @@ function ModalConfirm({ isOpen, onClose, numeroDoc }) {
         <button className="closeButtonConfirm" onClick={onClose}>X</button>
         <p className='messageConfirm'>Cadastro realizado com sucesso!</p>
       {numeroDoc && (
-        <p className="numeroDocConfirm">Número do Documento: {numeroDoc}</p> // Exibe o NumeroDoc
+        <p className="numeroDocConfirm">Número da Solicitação: {numeroDoc}</p> // Exibe o NumeroDoc
         )}
       </div>
     </div>
