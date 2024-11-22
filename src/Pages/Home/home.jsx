@@ -148,7 +148,7 @@ function ListaSolicitacao() {
                             </div>
                         </div>
                         <div className='bodyCard'>
-                             <label>Status: <span>{dados.NumeroDoc}</span></label>
+                             <label>Numero: <span>{dados.NumeroDoc}</span></label>
                             <label>Status: <span>{dados.Estado}</span></label>
                             <label>Data Encerrado: <span>{dados.DataEncerrado}</span></label>
                             <label>Solicitante: <span>{dados.Solicitante}</span></label>
