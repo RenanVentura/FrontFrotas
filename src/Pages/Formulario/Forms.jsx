@@ -21,7 +21,8 @@ function Forms() {
 
   const [dataSolicitacao, setDataSolicitacao] = useState(formatDate(new Date()));
   const [isLoading, setIsLoading] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false); // Estado para controlar o ModalConfirm
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [numeroDoc, setNumeroDoc] = useState(null); // Estado para armazenar o NumeroDoc gerado
 
   const parseDate = (dateString) => {
     const [day, month, year] = dateString.split('/');
@@ -43,21 +44,21 @@ function Forms() {
       return;
     }
 
-    setIsLoading(true); // Mostra o modal de carregamento
+    setIsLoading(true);
 
     const parsedDataSolicitacao = formatDate(parseDate(dataSolicitacao));
     const dataEmissao = formatDate(new Date());
 
     try {
-
+      // Obtém o maior NumeroDoc já cadastrado
       const response = await api.get('/solicitacao');
       const solicitacoes = response.data || [];
       const maxNumeroDoc = solicitacoes.reduce((max, solicitacao) => {
         return solicitacao.NumeroDoc > max ? solicitacao.NumeroDoc : max;
-      }, 0)
-
+      }, 0);
       const newNumeroDoc = maxNumeroDoc + 1;
 
+      // Cadastra a nova solicitação
       await api.post('/solicitacao', {
         Solicitante: inputSolicitante.current.value,
         Filial: inputFilial.current.value,
@@ -71,11 +72,13 @@ function Forms() {
         Estado: 'Pendente',
         DataEncerrado: "",
         StatusDelete: true,
-        NumeroDoc:newNumeroDoc
+        NumeroDoc: newNumeroDoc
       });
 
-      setIsConfirmOpen(true); 
+      setNumeroDoc(newNumeroDoc); // Define o NumeroDoc para exibição no modal
+      setIsConfirmOpen(true); // Abre o modal de confirmação
 
+      // Limpa os campos do formulário
       inputSolicitante.current.value = '';
       inputFilial.current.value = 'Selecione';
       inputTipoServico.current.value = 'Selecione';
@@ -87,7 +90,7 @@ function Forms() {
       console.error("Erro ao cadastrar a solicitação:", error);
       alert("Ocorreu um erro ao cadastrar a solicitação.");
     } finally {
-      setIsLoading(false); // Esconde o modal de carregamento
+      setIsLoading(false);
     }
   }
 
@@ -96,25 +99,29 @@ function Forms() {
   };
 
   return (
-    <div className='container'>
+    <div className="container">
       <ModalLoading isLoading={isLoading} />
-      <ModalConfirm isOpen={isConfirmOpen} onClose={closeConfirmModal} message="Cadastrado com sucesso!" />
-      <div className='Cabecalho'>
-        <img src={Logo} alt="LogoQually" className='LogoImage' />
+      <ModalConfirm
+        isOpen={isConfirmOpen}
+        onClose={closeConfirmModal}
+        numeroDoc={numeroDoc} // Passa o NumeroDoc para o modal
+      />
+      <div className="Cabecalho">
+        <img src={Logo} alt="LogoQually" className="LogoImage" />
       </div>
       <form>
         <h1>Solicitação de Serviço</h1>
         <span>Solicitante:</span>
-        <input name="solicitante" type='text' ref={inputSolicitante} />
+        <input name="solicitante" type="text" ref={inputSolicitante} />
         <span>Data da Solicitação:</span>
         <input
           name="datasolicitacao"
-          type='text'
+          type="text"
           value={dataSolicitacao}
           onChange={(e) => setDataSolicitacao(e.target.value)}
           placeholder="DD/MM/AAAA"
         />
-         <span>Filial:</span>
+        <span>Filial:</span>
         <select name="filial" ref={inputFilial}>
           <option>Selecione</option>
           <option value="Qually Matriz">Qually Matriz</option>
@@ -133,9 +140,9 @@ function Forms() {
           <option value="Boracheiro">Borracharia</option>
         </select>
         <span>Serviço/Peça:</span>
-        <input name="servico" type='text' ref={inputServico} />
+        <input name="servico" type="text" ref={inputServico} />
         <span>Equipamento:</span>
-        <input name="equipamento" type='text' ref={inputEquipamento} />
+        <input name="equipamento" type="text" ref={inputEquipamento} />
         <span>Urgência:</span>
         <select name="urgencia" ref={inputUrgencia}>
           <option>Selecione</option>
@@ -144,9 +151,10 @@ function Forms() {
           <option value="Programada">Programada</option>
         </select>
         <span>Descrição:</span>
-        <textarea rows={4} cols={50} className='Descricao' ref={inputObs}></textarea>
-
-        <button type='button' onClick={sendInfo}>Finalizar Solicitação</button>
+        <textarea rows={4} cols={50} className="Descricao" ref={inputObs}></textarea>
+        <button type="button" onClick={sendInfo}>
+          Finalizar Solicitação
+        </button>
       </form>
     </div>
   );
