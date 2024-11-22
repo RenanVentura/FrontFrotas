@@ -6,22 +6,22 @@ import NotificaModal from '../ModalNotifica//ModalNotifica.jsx'
 
 
 
-const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }) => {
+const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => { }, initialData }) => {
     const [formData, setFormData] = useState(initialData || {});
-    const [isNotificaOpen, setNotificaOpen] = useState(false); 
+    const [isNotificaOpen, setNotificaOpen] = useState(false);
 
     useEffect(() => {
         if (initialData) {
             setFormData({
                 ...initialData,
-                DataEncerrado: initialData.DataEncerrado 
-                    ? formatDate(initialData.DataEncerrado) 
-                    : formatDate(new Date()), 
+                DataEncerrado: initialData.DataEncerrado
+                    ? formatDate(initialData.DataEncerrado)
+                    : formatDate(new Date()),
             });
         } else {
             setFormData({
                 ...formData,
-                DataEncerrado: formatDate(new Date()), 
+                DataEncerrado: formatDate(new Date()),
             });
         }
     }, [initialData]);
@@ -47,7 +47,7 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
         try {
             const updatedData = {
                 ...formData,
-                DataEncerrado: formData.DataEncerrado, 
+                DataEncerrado: formData.DataEncerrado,
             };
 
             const response = await Api.put(`/solicitacao/${initialData.id}`, updatedData);
@@ -56,7 +56,7 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
                 console.log("Solicitação atualizada com sucesso:", response.data);
                 onSave(response.data);
                 onClose();
-                window.location.reload(); 
+                window.location.reload();
             } else {
                 console.error("Resposta inesperada:", response);
             }
@@ -71,19 +71,20 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
 
     const handleDelete = async () => {
         try {
-            const response = await Api.delete(`/solicitacao/${initialData.id}`);
+            const response = await Api.put(`/solicitacao/${initialData.id}/delete`);
+
             if (response.status === 200 || response.status === 204) {
-                console.log("Solicitação deletada com sucesso.");
-                onDelete(); 
-                onClose();
-                window.location.reload(); 
+                console.log("Solicitação marcada como deletada com sucesso.");
+                onDelete(); // Chama o callback para atualizar a UI
+                onClose();  // Fecha o modal
+                window.location.reload(); // Recarrega a página, se necessário
             } else {
-                console.error("Erro ao deletar solicitação:", response);
+                console.error("Erro ao atualizar a solicitação:", response);
             }
         } catch (error) {
-            console.error("Erro ao deletar a solicitação:", error);
+            console.error("Erro ao atualizar a solicitação:", error);
         }
-        setNotificaOpen(false); // Fecha o modal de confirmação após a deleção
+        setNotificaOpen(false); // Fecha o modal de confirmação após a ação
     };
 
     return (
@@ -99,18 +100,18 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
                                     src={lixo}
                                     alt="Lixeira"
                                     className="modal-edit-trash"
-                                    onClick={handleDeleteClick} 
+                                    onClick={handleDeleteClick}
                                     style={{ width: '24px', height: '24px', cursor: 'pointer' }}
                                 />
                             </div>
                         </div>
                         <label className="modal-edit-label">
                             Status:
-                            <select 
-                                name="Estado" 
-                                className="modal-edit-input" 
-                                value={formData.Estado || ''} 
-                                onChange={handleChange} 
+                            <select
+                                name="Estado"
+                                className="modal-edit-input"
+                                value={formData.Estado || ''}
+                                onChange={handleChange}
                                 required
                             >
                                 <option value="Pendente">Pendente</option>
@@ -209,10 +210,10 @@ const ModalEdit = ({ isOpen, onClose, onSave, onDelete = () => {}, initialData }
                     </div>
                 </div>
             </form>
-            <NotificaModal 
-                isOpen={isNotificaOpen} 
-                onClose={() => setNotificaOpen(false)} 
-                onConfirm={handleDelete} 
+            <NotificaModal
+                isOpen={isNotificaOpen}
+                onClose={() => setNotificaOpen(false)}
+                onConfirm={handleDelete}
             />
         </>
     );
