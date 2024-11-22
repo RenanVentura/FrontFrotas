@@ -51,8 +51,12 @@ function Forms() {
     try {
 
       const response = await api.get('/solicitacao');
-        const maxNumeroDoc = response.data.NumeroDoc || 0; // Se não houver registros, começa do 0
-        const newNumeroDoc = maxNumeroDoc + 1;
+      const solicitacoes = response.data || [];
+      const maxNumeroDoc = solicitacoes.reduce((max, solicitacao) => {
+        return solicitacao.NumeroDoc > max ? solicitacao.NumeroDoc : max;
+      }, 0)
+
+      const newNumeroDoc = maxNumeroDoc + 1;
 
       await api.post('/solicitacao', {
         Solicitante: inputSolicitante.current.value,
