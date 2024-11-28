@@ -72,11 +72,12 @@ function Forms() {
         Estado: 'Pendente',
         DataEncerrado: "",
         StatusDelete: true,
-        NumeroDoc: newNumeroDoc
+        NumeroDoc: newNumeroDoc,
+        DateAlt: new Date()
       });
 
-      setNumeroDoc(newNumeroDoc); // Define o NumeroDoc para exibição no modal
-      setIsConfirmOpen(true); // Abre o modal de confirmação
+      setNumeroDoc(newNumeroDoc); 
+      setIsConfirmOpen(true); 
 
       // Limpa os campos do formulário
       inputSolicitante.current.value = '';
