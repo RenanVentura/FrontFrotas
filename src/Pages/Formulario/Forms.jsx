@@ -58,7 +58,8 @@ function Forms() {
       }, 0);
       const newNumeroDoc = maxNumeroDoc + 1;
 
-      // Cadastra a nova solicitação
+      const dateAltFormatted = formatDate(new Date()); // Formata a data atual como DD/MM/YYYY
+
       await api.post('/solicitacao', {
         Solicitante: inputSolicitante.current.value,
         Filial: inputFilial.current.value,
@@ -73,8 +74,9 @@ function Forms() {
         DataEncerrado: "",
         StatusDelete: true,
         NumeroDoc: newNumeroDoc,
-        DateAlt: new Date()
+        DateAlt: dateAltFormatted // Armazena a data formatada
       });
+      
 
       setNumeroDoc(newNumeroDoc); 
       setIsConfirmOpen(true); 
