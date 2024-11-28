@@ -74,7 +74,7 @@ function Forms() {
         DataEncerrado: "",
         StatusDelete: true,
         NumeroDoc: newNumeroDoc,
-        DateAlt: dateAltFormatted // Armazena a data formatada
+       // DateAlt: dateAltFormatted // Armazena a data formatada
       });
       
 
